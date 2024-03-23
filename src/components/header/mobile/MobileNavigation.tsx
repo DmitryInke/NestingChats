@@ -19,7 +19,6 @@ const MobileNavigation = ({ pages }: MobileNavigationProps) => {
   };
 
   const handleCloseNavMenu = () => {
-    console.log("anchorElNav", anchorElNav);
     setAnchorElNav(null);
   };
 
