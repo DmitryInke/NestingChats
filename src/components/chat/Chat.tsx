@@ -16,19 +16,20 @@ import { useCreateMessage } from "../../hooks/useCreateMessage";
 import { useEffect, useRef, useState } from "react";
 import { useGetMessages } from "../../hooks/useGetMessages";
 import { useMessageCreated } from "../../hooks/useMessageCreated";
+import { useGetMe } from "../../hooks/useGetMe";
 
 const Chat = () => {
   const params = useParams();
   const [message, setMessage] = useState("");
   const chatId = params._id!;
   const { data } = useGetChat({ _id: chatId });
-  const [createMessage] = useCreateMessage(chatId);
+  const [createMessage] = useCreateMessage();
   const { data: messages } = useGetMessages({ chatId });
   const divRef = useRef<HTMLDivElement | null>(null);
+  const { data: selfUserId } = useGetMe();
   const location = useLocation();
-  const { data: latestMessage } = useMessageCreated({ chatId });
 
-  console.log(latestMessage);
+  useMessageCreated({ chatId });
 
   const scrollToBottom = () => divRef.current?.scrollIntoView();
 
@@ -49,25 +50,57 @@ const Chat = () => {
     <Stack sx={{ height: "100%", justifyContent: "space-between" }}>
       <h1>{data?.chat.name}</h1>
       <Box sx={{ maxHeight: "70vh", overflow: "auto" }}>
-        {messages?.messages.map((message) => (
-          <Grid container alignItems="center" marginBottom="1rem">
-            <Grid item xs={2} lg={1}>
-              <Avatar src="" sx={{ width: 52, height: 52 }} />
-            </Grid>
-            <Grid item xs={10} lg={11}>
-              <Stack>
-                <Paper sx={{ width: "fit-content" }}>
-                  <Typography sx={{ padding: "0.9rem" }}>
-                    {message.content}
-                  </Typography>
-                </Paper>
-                <Typography variant="caption" sx={{ marginLeft: "0.25rem" }}>
-                  {new Date(message.createdAt).toLocaleTimeString()}
-                </Typography>
-              </Stack>
-            </Grid>
-          </Grid>
-        ))}
+        {messages &&
+          [...messages.messages]
+            .sort(
+              (messageA, messageB) =>
+                new Date(messageA.createdAt).getTime() -
+                new Date(messageB.createdAt).getTime()
+            )
+            .map((message) => {
+              const isSelfMessage = message.userId !== selfUserId?.me._id;
+              return (
+                <Grid
+                  container
+                  alignItems="flex-end" // Align items to the bottom
+                  marginBottom="1rem"
+                  justifyContent={isSelfMessage ? "flex-end" : "flex-start"}
+                >
+                  <Grid item>
+                    <Avatar
+                      src=""
+                      sx={{ width: 52, height: 52, marginRight: "1rem" }}
+                    />{" "}
+                    {/* Adjust marginRight for space */}
+                  </Grid>
+                  <Grid item>
+                    <Stack
+                      direction={isSelfMessage ? "row-reverse" : "row"}
+                      spacing={1}
+                    >
+                      <Paper
+                        sx={{ width: "fit-content", padding: "0.5rem" }}
+                        elevation={4}
+                      >
+                        {" "}
+                        {/* Add padding and shadow for aesthetic */}
+                        <Typography sx={{ padding: "0.4rem" }}>
+                          {message.content}
+                        </Typography>
+                        <Typography
+                          variant="caption"
+                          sx={{ display: "block", textAlign: "right" }}
+                        >
+                          {" "}
+                          {/* Use block display and right align for the timestamp */}
+                          {new Date(message.createdAt).toLocaleTimeString()}
+                        </Typography>
+                      </Paper>
+                    </Stack>
+                  </Grid>
+                </Grid>
+              );
+            })}
         <div ref={divRef}></div>
       </Box>
       <Paper
