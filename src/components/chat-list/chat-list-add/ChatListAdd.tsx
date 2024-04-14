@@ -55,7 +55,7 @@ const ChatListAdd = ({ open, handleClose }: ChatListAddProps) => {
           <Button
             variant="outlined"
             onClick={async () => {
-              if (!name.length) {
+              if (!name.trim().length) {
                 setError("Chat name is required.");
                 return;
               }

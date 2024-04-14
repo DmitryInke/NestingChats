@@ -4,9 +4,10 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
-import { ListItemButton } from "@mui/material";
+import { Box, ListItemButton } from "@mui/material";
 import router from "../../Routes";
 import { Chat } from "../../../gql/graphql";
+import "./ChatListItem.css";
 
 interface ChatListProps {
   chat: Chat;
@@ -27,22 +28,33 @@ const ChatListItem = ({ chat, selected }: ChatListProps) => {
           <ListItemText
             primary={chat.name}
             secondary={
-              <>
-                <Typography
-                  sx={{ display: "inline" }}
-                  component="span"
-                  variant="body2"
-                  color="text.primary"
-                >
-                  {chat.latestMessage?.user.username || ""}
-                </Typography>
-                {" " + (chat.latestMessage?.content || "")}
-              </>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: "0.5rem",
+                }}
+              >
+                <div className="line-container">
+                  <Typography
+                    className="username"
+                    component="span"
+                    variant="body2"
+                    color="text.primary"
+                    sx={{ display: "inline", mr: 1 }} // Add some right margin for spacing
+                  >
+                    {chat.latestMessage?.user.username || ""}
+                  </Typography>
+                  <div className="content">
+                    {" " + (chat.latestMessage?.content || "")}
+                  </div>
+                </div>
+              </Box>
             }
           />
         </ListItemButton>
       </ListItem>
-      <Divider variant="inset" component="li" />
+      <Divider variant="inset" />
     </>
   );
 };
