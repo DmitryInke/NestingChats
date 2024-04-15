@@ -32,7 +32,7 @@ const Chat = () => {
     limit: PAGE_SIZE,
   });
   const divRef = useRef<HTMLDivElement | null>(null);
-  const { data: selfUserId } = useGetMe();
+  const me = useGetMe();
   const location = useLocation();
   const { messagesCount, countMessages } = useCountMessages(chatId);
 
@@ -91,7 +91,7 @@ const Chat = () => {
                   new Date(messageB.createdAt).getTime()
               )
               .map((message) => {
-                const isSelfMessage = message.user._id !== selfUserId?.me._id;
+                const isSelfMessage = message.user._id !== me?.data?.me._id;
                 return (
                   <Grid
                     key={message._id}
@@ -103,8 +103,24 @@ const Chat = () => {
                     justifyContent={isSelfMessage ? "flex-end" : "flex-start"}
                   >
                     {!isSelfMessage && (
-                      <Grid item>
-                        <Avatar src="" sx={{ width: 52, height: 52 }} />
+                      <Grid
+                        item
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Avatar
+                          src={message.user.imageUrl}
+                          sx={{ width: 52, height: 52 }}
+                        />
+                        <Typography
+                          variant="body2"
+                          style={{ marginTop: "0.5rem" }}
+                        >
+                          {message.user.username}
+                        </Typography>
                       </Grid>
                     )}
 
@@ -140,8 +156,24 @@ const Chat = () => {
                     </Grid>
 
                     {isSelfMessage && (
-                      <Grid item>
-                        <Avatar src="" sx={{ width: 52, height: 52 }} />
+                      <Grid
+                        item
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Avatar
+                          src={message.user.imageUrl}
+                          sx={{ width: 52, height: 52 }}
+                        />
+                        <Typography
+                          variant="body2"
+                          style={{ marginTop: "0.5rem" }}
+                        >
+                          {message.user.username}
+                        </Typography>
                       </Grid>
                     )}
                   </Grid>

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { API_URL } from "../constants/urls";
 import client from "../constants/apollo-client";
 import { UNKNOWN_ERROR_MESSAGE } from "../constants/errors";
+import { authenticatedVar } from "../constants/authenticated";
 
 interface LoginRequest {
   email: string;
@@ -27,6 +28,7 @@ const useLogin = () => {
       }
       return;
     }
+    authenticatedVar(true);
     setError("");
     await client.refetchQueries({ include: "active" });
   };
