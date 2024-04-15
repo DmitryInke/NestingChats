@@ -2,6 +2,7 @@ import { Button, Stack, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useGetMe } from "../../hooks/useGetMe";
 import { useNavigate } from "react-router-dom";
+import React from "react";
 
 interface AuthProps {
   submitLabel: string;
@@ -58,7 +59,11 @@ const Auth = ({
         }
         onChange={(event) => setEmail(event.target.value)}
       />
-      {extraFields}
+      {extraFields &&
+        extraFields.map(
+          (field, index) =>
+            React.cloneElement(field as React.ReactElement, { key: index }) // Safely clone element with a key
+        )}
       <TextField
         type="password"
         label="Password"

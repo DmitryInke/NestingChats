@@ -65,7 +65,7 @@ const ChatList = () => {
             useWindow={false}
             threshold={50}
           >
-            {data?.chats &&
+            {data?.chats && data.chats.length > 0 ? (
               [...data.chats]
                 .sort((chatA, chatB) => {
                   if (!chatA.latestMessage) {
@@ -78,11 +78,17 @@ const ChatList = () => {
                 })
                 .map((chat) => (
                   <ChatListItem
+                    key={chat._id} // Adding the unique key prop here
                     chat={chat}
                     selected={chat._id === selectedChatId}
                   />
                 ))
-                .reverse()}
+                .reverse()
+            ) : (
+              <div style={{ padding: "20px", textAlign: "center" }}>
+                No chats available or loading...
+              </div>
+            )}
           </InfiniteScroll>
         </Box>
       </Stack>

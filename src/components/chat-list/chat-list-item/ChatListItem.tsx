@@ -23,33 +23,36 @@ const ChatListItem = ({ chat, selected }: ChatListProps) => {
           selected={selected}
         >
           <ListItemAvatar>
-            <Avatar alt="Remy Sharp" src="/static/iamages/avatar/1.jpg" />
+            <Avatar alt="Remy Sharp" src="" />
           </ListItemAvatar>
           <ListItemText
             primary={chat.name}
             secondary={
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  gap: "0.5rem",
-                }}
-              >
-                <div className="line-container">
-                  <Typography
-                    className="username"
-                    component="span"
-                    variant="body2"
-                    color="text.primary"
-                    sx={{ display: "inline", mr: 1 }} // Add some right margin for spacing
-                  >
-                    {chat.latestMessage?.user.username || ""}
-                  </Typography>
-                  <div className="content">
-                    {" " + (chat.latestMessage?.content || "")}
+              <Typography component="div">
+                {" "}
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    gap: "0.5rem",
+                  }}
+                >
+                  <div className="line-container">
+                    <Typography
+                      className="username"
+                      component="div"
+                      variant="body2"
+                      color="text.primary"
+                      sx={{ display: "inline", mr: 1 }}
+                    >
+                      {chat.latestMessage?.user.username || ""}
+                    </Typography>
+                    <div className="content">
+                      {" " + (chat.latestMessage?.content || "")}
+                    </div>
                   </div>
-                </div>
-              </Box>
+                </Box>
+              </Typography>
             }
           />
         </ListItemButton>

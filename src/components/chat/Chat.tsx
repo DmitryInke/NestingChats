@@ -94,6 +94,7 @@ const Chat = () => {
                 const isSelfMessage = message.user._id !== selfUserId?.me._id;
                 return (
                   <Grid
+                    key={message._id}
                     container
                     wrap="nowrap"
                     spacing={1}

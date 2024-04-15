@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import { Link as MUILink, TextField } from "@mui/material";
 import Auth from "./Auth";
 import { useCreateUser } from "../../hooks/useCreateUser";
@@ -57,9 +57,13 @@ const Signup = () => {
         }
       }}
     >
-      <Link to={"/login"} style={{ alignSelf: "center" }}>
-        <MUILink>Login</MUILink>
-      </Link>
+      <MUILink
+        component={RouterLink}
+        to="/login"
+        style={{ alignSelf: "center" }}
+      >
+        Login
+      </MUILink>
     </Auth>
   );
 };
