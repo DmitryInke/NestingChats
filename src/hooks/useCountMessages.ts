@@ -6,12 +6,13 @@ import {
   CHAT_NOT_EXIST_SNACK_MESSAGE,
   UNKNOWN_ERROR_SNACK_MESSAGE,
 } from "../constants/errors";
+import { commonFetch } from "../utils/fetch";
 
 const useCountMessages = (chatId: string) => {
   const [messagesCount, setMessagesCount] = useState<number | undefined>();
   const navigate = useNavigate();
   const countMessages = useCallback(async () => {
-    const res = await fetch(`${API_URL}/messages/count?chatId=${chatId}`);
+    const res = await commonFetch(`${API_URL}/messages/count?chatId=${chatId}`);
     if (!res.ok) {
       snackVar(UNKNOWN_ERROR_SNACK_MESSAGE);
       navigate("/");
