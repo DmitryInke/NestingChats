@@ -1,46 +1,96 @@
-# Getting Started with Create NestingChats
+# NestingChats
 
-This project was bootstrapped with [Create NestingChats](https://github.com/facebook/create-react-app).
+## Description
+NestingChats is a real-time group chat application that allows users to create accounts, exchange messages, and upload profile pictures. The application supports responsive design, ensuring comfortable use on both computers and mobile devices.
 
-## Available Scripts
+## Demonstration
 
-In the project directory, you can run:
+Here is a live demonstration of the application in action:
 
-### `yarn start`
+![NestingChats Demo](https://github.com/DmitryInke/NestingChats-backend/blob/master/demo.gif?raw=true)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Key Features
+- Account creation and profile picture upload.
+- Create group chats or join existing ones with real-time messaging capabilities.
+- Responsive design for various devices.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Technologies
 
-### `yarn test`
+### Server-side
+- **Nest.js**: The backbone of the server-side application.
+- **GraphQL API**: Used for CRUD operations and managing data through MongoDB.
+- **WebSocket**: Supports subscriptions and real-time through WebSocket connections.
+- **JWT**: User authentication and authorization.
+- **MongoDB**: Database to store user and chat information.
+- **AWS S3**: Used for storing user profile images.
+- **Backend Repository**: [View the backend repository on GitHub](https://github.com/DmitryInke/NestingChats-backend)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Client-side
+- **React**: Frontend application.
+- **Material UI**: Component library for creating a responsive interface.
+- **Apollo Client**: Manages application state and interacts with the GraphQL API.
 
-### `yarn build`
+### Additional Tools and Services
+- **AWS Elastic Beanstalk & Amplify**: Deployment and hosting.
+- **AWS ElastiCache Redis**: Used for PubSub subscriptions.
+- **MongoDB Atlas**: Cloud database service used to manage MongoDB databases.
+- **CI/CD Pipeline**: Continuous integration and delivery.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Installation and Running
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Backend Installation
+Clone the backend repository:
+```bash
+git clone https://github.com/DmitryInke/NestingChats-backend
+```
+Install dependencies using pnpm (install pnpm if not installed):
+```bash
+npm install -g pnpm
+pnpm install
+```
+Before running the application, you need to create a `.env` file in the root directory and set your environment variables:
+```plaintext
+MONGODB_URI=
+DB_NAME=
+PORT=
+JWT_SECRET=
+JWT_EXPIRATION=
+AWS_ACCESS_KEY=
+AWS_SECRET_ACCESS_KEY=
+AWS_REGION=
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+#### Running the Backend
+- **Development mode**:
+  ```bash
+  pnpm run start
+  ```
+- **Watch mode**:
+  ```bash
+  pnpm run start:dev
+  ```
 
-### `yarn eject`
+### Frontend Installation
+Clone the frontend repository:
+```bash
+git clone https://github.com/DmitryInke/NestingChats-ui
+```
+Install dependencies using Yarn (install Yarn if not installed):
+```bash
+npm install -g yarn
+yarn install
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+#### Running the Frontend
+- **Development mode**:
+  ```bash
+  yarn start
+  ```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Usage
+To get started with the application, register or log in using your account, and join group chats for real-time communication.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Security
+All user data is protected with standard JWT authentication, ensuring the security and confidentiality of your data.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
-
-You can learn more in the [Create NestingChats documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
